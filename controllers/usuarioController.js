@@ -61,7 +61,7 @@ module.exports = {
         }
     },
 
-    registroChech: function (req,res) {
+    registroCheck: function (req,res) {
         if (req.session.usuarioLogueado != undefined) {
             res.redirect("/");
         }
@@ -96,7 +96,7 @@ module.exports = {
         if (req.session.usuarioLogueado != undefined) {
             res.redirect("/");
         }
-        req.session.usuarioLogueado = undefined;
+        req.session.destroy();
         res.clearCookie('idUsuario');
         return res.redirect('/');
     },

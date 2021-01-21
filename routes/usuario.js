@@ -11,7 +11,7 @@ router.post('/loginCheck', usuarioController.login);
 
 router.get('/registro', usuarioController.registro);
 
-router.post('/registroCheck', usuarioController.registroChech);
+router.post('/registrocheck', usuarioController.registroCheck);
 
 router.get('/comentarios', usuarioController.comentarios);
 

@@ -30,30 +30,20 @@ module.exports = {
     },
 
     buscar: function (req,res) {
-        let busqueda = req.query.busqueda;
-        db.Producto.findAll({
-            where:
-                {
-                    [op.or]: [
-                            {
-                                nombre: {
-                                    [op.like]: `%${busqueda}%`
-                                }
-                            },
-                            {
-                                marca: {
-                                [op.like]: `%${busqueda}%`
+        
+        const busqueda = req.query.busqueda;
 
-                                }
-                            }
-                   ]
-
+        db.producto.findAll({
+            where: {
+                nombre:{
+                    [op.substring]: busqueda
                 }
-            
+                
+            }
+        }).then(function(resultado){
+            res.render('resultadobusqueda',{resultados})
         })
-        .then(function (resultados) {
-            res.render('resultadoBusqueda', { title: busqueda , resultados: resultados});
-        })
+      
     },
 
     agregarComentario: function (req,res) {
@@ -85,16 +75,17 @@ module.exports = {
         if (req.session.usuarioLogueado == undefined) {
             res.redirect("/");
         }
-        db.Producto.create({
-            nombre: req.body.nombre,
-            marca: req.body.marca,
-            precio: req.body.precio,
-            categoria_id: req.body.categoria,
-            img_url: req.body.imagen
-        })
-        .then(function (resultado) {
-            res.redirect('/productos/detalle/'+ resultado.id)
-        })
+       db.producto.create(
+           {
+               nombre: req.body.nombre,
+               marca: req.body.marca,
+               precio: req.body.precio,
+               img_url: req.body.imagen,
+               categoria_id: req.body.categoria,
+               usuario_id: req.session.usuarioLogueado.id
+           }
+           
+       ).then(()=>res.redirect('/productos/misProductos'))
 
     },
 
