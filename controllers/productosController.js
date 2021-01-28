@@ -33,15 +33,15 @@ module.exports = {
         
         const busqueda = req.query.busqueda;
 
-        db.producto.findAll({
+        db.Producto.findAll({
             where: {
                 nombre:{
-                    [op.substring]: busqueda
+                    [op.substring] : busqueda
                 }
                 
             }
-        }).then(function(resultado){
-            res.render('resultadobusqueda',{resultados})
+        }).then(function(resultados){
+            res.render('resultadoBusqueda',{resultados})
         })
       
     },
@@ -75,7 +75,7 @@ module.exports = {
         if (req.session.usuarioLogueado == undefined) {
             res.redirect("/");
         }
-       db.producto.create(
+       db.Producto.create(
            {
                nombre: req.body.nombre,
                marca: req.body.marca,
